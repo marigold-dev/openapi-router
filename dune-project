@@ -35,15 +35,15 @@
 
 (package
  (name openapi)
- (version 0.5.0)
+ (version 0.6.0)
  (synopsis "Openapi documentation generation for Opium")
  (description "Shim layer around Opium.App (https://github.com/rgrinberg/opium/) for producing Openapi documentation pages")
  (license "BSD-3-Clause")
  (authors "J. Aaron Pendergrass <james.pendergrass@jhuapl.edu>")
  (maintainers "J. Aaron Pendergrass <james.pendergrass@jhuapl.edu>")
  (homepage "https://github.com/jhuapl-saralab/openapi-ocaml")
+ (source (github "jhuapl-saralab/openapi-ocaml"))
  (bug_reports "https://github.com/jhuapl-saralab/openapi-ocaml/issues")
- (documentation "https://github.com/jhuapl-saralab/openapi-ocaml")
  (depends
   (opium (= 0.20.0))
   (yojson (= 1.7.0))
