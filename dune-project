@@ -45,8 +45,8 @@
  (source (github "jhuapl-saralab/openapi-ocaml"))
  (bug_reports "https://github.com/jhuapl-saralab/openapi-ocaml/issues")
  (depends
-  (opium (= 0.20.0))
-  (yojson (= 1.7.0))
-  (core (= v0.14.1))
-  (ppx_yojson_conv (= v0.14.0))
-  (ppx_deriving (= 5.2.1))))
+  (opium (>= 0.20.0))
+  (yojson (>= 1.7.0))
+  (core (>= v0.14.1))
+  (ppx_yojson_conv (>= v0.14.0))
+  (ppx_deriving (>= 5.2.1))))
