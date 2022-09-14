@@ -35,17 +35,19 @@
 
 (package
  (name openapi_router)
- (version 0.6.0)
- (synopsis "Openapi documentation generation for Opium")
+ (version 0.1.0)
+ (synopsis "Http server agnostic Openapi documentation generation")
  (description
-  "Shim layer around Opium.App (https://github.com/rgrinberg/opium/) for producing Openapi documentation pages")
+  "A functor to wrap your http server and produce an Openapi documentation pages")
  (license "BSD-3-Clause")
- (authors "J. Aaron Pendergrass <james.pendergrass@jhuapl.edu>")
- (maintainers "J. Aaron Pendergrass <james.pendergrass@jhuapl.edu>")
- (homepage "https://github.com/jhuapl-saralab/openapi-ocaml")
+ (authors
+  "J. Aaron Pendergrass <james.pendergrass@jhuapl.edu>"
+  "Jules Guesnon <jules@matigold.dev>")
+ (maintainers "Jules Guesnon <jules@matigold.dev>")
+ (homepage "https://github.com/marigold-dev/openapi-router")
  (source
-  (github "jhuapl-saralab/openapi-ocaml"))
- (bug_reports "https://github.com/jhuapl-saralab/openapi-ocaml/issues")
+  (github "marigold-dev/openapi-router"))
+ (bug_reports "https://github.com/marigold-dev/openapi-router/issues")
  (depends
   (yojson
    (>= 1.7.0))
