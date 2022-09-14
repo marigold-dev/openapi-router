@@ -28,9 +28,8 @@
 ;; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 (library
- (name openapi)
- (public_name openapi)
- (modules Spec App Json_schema)
- (libraries yojson core opium)
- (preprocess (pps ppx_yojson_conv ppx_deriving.std))
- )
+ (name openapi_router)
+ (public_name openapi_router)
+ (libraries yojson core)
+ (preprocess
+  (pps ppx_yojson_conv ppx_deriving.std)))

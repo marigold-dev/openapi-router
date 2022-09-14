@@ -1,45 +1,90 @@
-Openapi for Ocaml
-=================
+**This a fork of [openapi](https://github.com/jhuapl-saralab/openapi-ocaml/)**
 
-This library provides basic types for parsing/serializing openapi
-specifications and a nearly drop-in replacement for `Opium.App` that
-registers endpoints in a specification and serves `openapi.json` and
-`docs` pages based on the `fastapi` implementation.
+# Openapi for Ocaml
 
-Usage
-=====
+This library is a fork of [openapi](https://github.com/jhuapl-saralab/openapi-ocaml/). The goal is to provide a way to generate Openapi UI not only for Opium, but for every http servers. To achieve this, this library provides a functor that'll create a layer above all the methods (`get`, `post`, `put`, ...) and generate a json and a documentation endpoint
 
-Basic usage should work equivalently to `Opium.App`. So instead of
+![documentation-example](assets/example.png)
+
+# Usage
+
+## Example with [Dream](https://github.com/aantron/dream)
+
+```ocaml
+module Config = struct
+  type app = Dream.handler
+  type route = Dream.route
+  type handler = Dream.handler
+
+  let json_path = "/openapi.json"
+  let doc_path = "/docs"
+
+  let json_route json = Dream.get json_path (fun _ -> Dream.json json)
+
+  let doc_route html = Dream.get doc_path (fun _ -> Dream.html html)
+
+  let get = Dream.get
+  let post = Dream.post
+  let delete = Dream.delete
+  let put = Dream.put
+  let options = Dream.options
+  let head = Dream.head
+  let patch = Dream.patch
+
+  let build_routes = Dream.router
+end
+
+module OpenRouter = Openapi.Make (Config)
+
+let start () =
+  OpenRouter.empty
+  |> OpenRouter.description "My app description"
+  |> OpenRouter.get ~description:"Hello endpoint" "/hello" hello
+  |> OpenRouter.build
+  |> Dream.logger
+  |> Dream.run ~interface:"0.0.0.0" ~port:8080
 ```
-let open Opium in
-App.empty
-|> App.get "/path/:foo" (fun h -> Response.of_plain_text "hello world")
-|> App.run_command
+
+## Example with [Opium](https://github.com/rgrinberg/opium)
+
+```ocaml
+module Config = struct
+  open Opium
+
+  type app = App.t
+  type handler = Rock.Handler.t
+  type route = App.builder
+
+  let json_path = "/openapi.json"
+  let doc_path = "/docs"
+
+  let json_route json =
+    App.get json_path (fun _ ->
+        Response.make
+          ~headers:(Headers.of_list [("Content-Type", "application/json")])
+          ~body:(Body.of_string json) ()
+        |> Lwt.return)
+
+  let doc_route html =
+    App.get json_path (fun _ ->
+        Response.make ~body:(Body.of_string html) () |> Lwt.return)
+
+  let get = App.get
+  let post = App.post
+  let delete = App.delete
+  let put = App.put
+  let options = App.options
+  let head = App.head
+  let patch = App.patch
+  let build_routes = List.fold_left (fun acc route -> route acc) App.empty
+end
+
+module OpenRouter = Openapi.Make (Config)
+
+let start () =
+  OpenRouter.empty
+  |> OpenRouter.description "My app description"
+  |> OpenRouter.get ~description:"Hello endpoint" "/hello" hello
+  |> OpenRouter.build
+  |> Opium.App.start
 ```
-
-Just do:
-```
-let open Opium in
-let module App = Openapi.App in
-App.empty
-|> App.get "/path/:foo" (fun h -> Response.of_plain_text "hello world")
-|> App.run_command
-```
-
-The endpoint creation methods provided by `Openapi.Opium.App` accept
-additional optional arguments to provide specification information for
-to document the endpoint. Check the type signatures of these methods
-for more information.
-
-Demo App
-========
-This library includes a demo app in `bin/demo` (that won't be installed
-by `opam`). To see the generated spec/documentation in action, run:
-```
-$ dune build
-$ ./_build/default/bin/demo.exe
-```
-Then browse to http://localhost:8888/docs
-
-
-

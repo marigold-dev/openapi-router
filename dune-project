@@ -29,24 +29,29 @@
 ;; (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ;; OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 (generate_opam_files true)
-(name openapi)
+
+(name openapi_router)
 
 (package
- (name openapi)
+ (name openapi_router)
  (version 0.6.0)
  (synopsis "Openapi documentation generation for Opium")
- (description "Shim layer around Opium.App (https://github.com/rgrinberg/opium/) for producing Openapi documentation pages")
+ (description
+  "Shim layer around Opium.App (https://github.com/rgrinberg/opium/) for producing Openapi documentation pages")
  (license "BSD-3-Clause")
  (authors "J. Aaron Pendergrass <james.pendergrass@jhuapl.edu>")
  (maintainers "J. Aaron Pendergrass <james.pendergrass@jhuapl.edu>")
  (homepage "https://github.com/jhuapl-saralab/openapi-ocaml")
- (source (github "jhuapl-saralab/openapi-ocaml"))
+ (source
+  (github "jhuapl-saralab/openapi-ocaml"))
  (bug_reports "https://github.com/jhuapl-saralab/openapi-ocaml/issues")
  (depends
-  (opium (>= 0.20.0))
-  (yojson (>= 1.7.0))
-  (core (>= v0.14.1))
-  (ppx_yojson_conv (>= v0.14.0))
-  (ppx_deriving (>= 5.2.1))))
+  (yojson
+   (>= 1.7.0))
+  (core
+   (>= v0.14.1))
+  (ppx_yojson_conv
+   (>= v0.14.0))
+  (ppx_deriving
+   (>= 5.2.1))))
